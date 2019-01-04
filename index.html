@@ -4,17 +4,15 @@
 <html>
 <body>
 
+<h2>Your seat reservations</h2>
 
-
-<p>First name: <strong data-bind="text: firstName"></strong></p>
-<p>Last name: <strong data-bind="text: lastName"></strong></p>
-
-<p>First name: <input data-bind="value: firstName" /></p>
-<p>Last name: <input data-bind="value: lastName" /></p>
-
-<p> Full name: <strong data-bind="text: fullName"></strong></p>
-<button data-bind="click: capitalizeLastName">Go caps</button>
-
+<table>
+    <thead><tr>
+        <th>Passenger name</th><th>Meal</th><th>Surcharge</th><th></th>
+    </tr></thead>
+    <!-- Todo: Generate table body -->
+    <tbody></tbody>
+</table>
 
 
 <script type="text/javascript" src="knockout-3.4.2.js"></script>

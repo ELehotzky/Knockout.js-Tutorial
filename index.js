@@ -1,17 +1,26 @@
-// This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
-function AppViewModel() {
-    this.firstName = ko.observable("Bert");
-    this.lastName = ko.observable("Bertington");
-    
-    this.fullName = ko.computed(function() {
-        return this.firstName() + " " + this.lastName();
-    }, this);
-    
-    this.capitalizeLastName = function() {
-        let currentVal = this.lastName();
-        this.lastName(currentVal.toUpperCase());
-    };
+// Class to represent a row in the seat reservations grid
+function SeatReservation(name, initialMeal) {
+    var self = this;
+    self.name = name;
+    self.meal = ko.observable(initialMeal);
 }
 
-// Activates knockout.js
-ko.applyBindings(new AppViewModel());
+// Overall viewmodel for this screen, along with initial state
+function ReservationsViewModel() {
+    var self = this;
+
+    // Non-editable catalog data - would come from the server
+    self.availableMeals = [
+        { mealName: "Standard (sandwich)", price: 0 },
+        { mealName: "Premium (lobster)", price: 34.95 },
+        { mealName: "Ultimate (whole zebra)", price: 290 }
+    ];    
+
+    // Editable data
+    self.seats = ko.observableArray([
+        new SeatReservation("Steve", self.availableMeals[0]),
+        new SeatReservation("Bert", self.availableMeals[0])
+    ]);
+}
+
+ko.applyBindings(new ReservationsViewModel());
