@@ -21,6 +21,8 @@
     </tbody>
     <button data-bind="click: addSeat">Reserve another seat</button>
 </table>
+<h3 data-bind="visible: totalSurcharge() > 0">
+	Total surcharge: $<span data-bind="text: totalSurcharge().toFixed(2)"></span></h3>
 
 
 <script type="text/javascript" src="knockout-3.4.2.js"></script>

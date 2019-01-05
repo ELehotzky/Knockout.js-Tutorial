@@ -13,7 +13,7 @@ function SeatReservation(name, initialMeal) {
 // Overall viewmodel for this screen, along with initial state
 function ReservationsViewModel() {
     var self = this;
-
+    
     // Non-editable catalog data - would come from the server
     self.availableMeals = [
         { mealName: "Standard (sandwich)", price: 0 },
@@ -34,6 +34,16 @@ function ReservationsViewModel() {
     self.removeSeat = function(seat) {
     	self.seats.remove(seat)
     };
+
+    self.totalSurcharge = ko.computed(function() {
+    	let total = 0;
+
+    	for (i in self.seats()) {
+    		total += self.seats()[i].meal().price;
+    	} 
+    	return total;
+    });
+
 }
 
 ko.applyBindings(new ReservationsViewModel());
