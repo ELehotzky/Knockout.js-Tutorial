@@ -4,14 +4,26 @@
 <html>
 <body>
 
-<!-- Todo: Create UI -->
-<!-- Folders -->
+	<!-- Todo: Create UI -->
+	<!-- Folders -->
 	<ul class="folders" data-bind="foreach: folders">
 		<li data-bind="text: $data, css: {
             selected: $data == $root.chosenFolderId() },
             click: $root.goToFolder"></li>
 	</ul>
 
+	<!-- Mail display -->
+	<table class="mails" data-bind="with: chosenFolderData">
+	    <thead><tr><th>From</th><th>To</th><th>Subject</th><th>Date</th></tr></thead>
+	    <tbody data-bind="for-each: mails">
+	        <tr>
+	            <td data-bind="text: from"></td>
+	            <td data-bind="text: to"></td>
+	            <td data-bind="text: subject"></td>
+	            <td data-bind="text: date"></td>
+	        </tr>
+	    </tbody>
+	</table>
 
 <script type="text/javascript" src="knockout-3.4.2.js"></script>
 <script src="index.js"></script>
