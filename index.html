@@ -5,6 +5,12 @@
 <body>
 
 <!-- Todo: Create UI -->
+<!-- Folders -->
+	<ul class="folders" data-bind="foreach: folders">
+		<li data-bind="text: $data, css: {
+            selected: $data == $root.chosenFolderId() },
+            click: $root.goToFolder"></li>
+	</ul>
 
 
 <script type="text/javascript" src="knockout-3.4.2.js"></script>
