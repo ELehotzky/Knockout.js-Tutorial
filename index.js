@@ -1,39 +1,30 @@
-function WebmailViewModel() {
-    // Data
-    const self = this;
-    self.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
-    self.chosenFolderId = ko.observable();
-    self.chosenFolderData = ko.observable();
-    self.chosenMailData = ko.observable();
-
-    // Behaviours    
-    self.goToFolder = function(folder) { 
-    	location.hash = folder;
-    };    
-
-    self.goToMail = function(mail) {
-    	location.hash = mail.folder + "/" + mail.id
-    };
-
-    //Client-side routing
-    Sammy(function() {
-    	this.get("#:folder", function() {
-    		self.chosenFolderId(this.params.folder);
-    		self.chosenMailData(null);
-    		$.get("/mail", {folder: this.params.folder}, self.chosenFolderData);
-    	});
-
-    	this.get("#:folder/:mailId", function() {
-    		self.chosenFolderId(this.params.folder);
-    		self.chosenFolderData(null);
-    		$.get("/mail", {mailId: this.params.mailId}, self.chosenMailData);
-    	});
-
-    	this.get("", function() {
-    		this.app.runRoute("get", "#Inbox")
-    	});
-    })
-    .run();
+function Answer(text) { 
+	this.answerText = text; this.points = ko.observable(1); 
 };
 
-ko.applyBindings(new WebmailViewModel());
+function SurveyViewModel(question, pointsBudget, answers) {
+    this.question = question;
+    this.pointsBudget = pointsBudget;
+    this.answers = $.map(answers, function(text) { 
+    	return new Answer(text) 
+    });
+    this.save = function() { 
+    	alert('To do') 
+    };
+                       
+    this.pointsUsed = ko.computed(function() {
+        let total = 0;
+        for (let i = 0; i < this.answers.length; i++)
+            total += this.answers[i].points();
+        return total;        
+    }, this);
+};
+
+ko.applyBindings(new SurveyViewModel("Which factors affect your technology choices?", 10, 
+	[
+   "Functionality, compatibility, pricing - all that boring stuff",
+   "How often it is mentioned on Hacker News",    
+   "Number of gradients/dropshadows on project homepage",        
+   "Totally believable testimonials on project homepage"
+	])
+);
