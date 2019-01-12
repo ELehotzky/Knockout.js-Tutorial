@@ -1,11 +1,15 @@
 ko.bindingHandlers.fadeVisible = {
-  update: function(element, valueAccessor) {
+  init: function(element, valueAccessor) {
     // Lets the display fade in/out
     let shouldDisplay = valueAccessor();
+    $(element).toggle(shouldDisplay);
+  },
+  update: function(element, valueAccessor) {
+    // Fades in/out on update
+    let shouldDisplay = valueAccessor();
     shouldDisplay ? $(element).fadeIn() : $(element).fadeOut();
-  };
+  }
 };
-
 
 function Answer(text) { 
 	this.answerText = text; this.points = ko.observable(1); 
