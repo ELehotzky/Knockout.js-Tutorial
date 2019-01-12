@@ -1,3 +1,39 @@
+ko.bindingHandlers.starRating = {
+  init: function(element, valueAccessor) {
+    $(element).addClass("starRating");
+    for (let i = 0; i < 5; i++) {
+      $("<span>").appendTo(element);
+    }
+    $("span", element).each(function(index) {
+      $(this)
+        .hover(
+          function() {
+            $(this)
+              .prevAll()
+              .add(this)
+              .addClass("hoverChosen");
+          },
+          function() {
+            $(this)
+              .prevAll()
+              .add(this)
+              .removeClass("hoverChosen");
+          }
+        )
+        .click(function() {
+          let observable = valueAccessor();
+          observable(index + 1);
+        });
+    });
+  },
+  update: function(element, valueAccessor) {
+    let observable = valueAccessor();
+    $("span", element).each(function(index) {
+      $(this).toggleClass("chosen", index < observable());
+    });
+  }
+};
+
 ko.bindingHandlers.jqButton = {
   init: function(element) {
     $(element).button();
