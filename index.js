@@ -1,3 +1,13 @@
+ko.bindingHandlers.jqButton = {
+  init: function(element) {
+    $(element).button();
+  },
+  update: function(element, valueAccessor) {
+    let currentValue = valueAccessor();
+    $(element).button("option", "disabled", currentValue.enable === false);
+  }
+};
+
 ko.bindingHandlers.fadeVisible = {
   init: function(element, valueAccessor) {
     // Lets the display fade in/out
