@@ -4,22 +4,23 @@
 <html>
 <body>
  
-<h3 data-bind="text: question"></h3>
-<p>Please distribute <b data-bind="text: pointsBudget"></b> points between the following options.</p>
+<h3>Tasks</h3>
 
-<table>
-    <thead><tr><th>Option</th><th>Importance</th></tr></thead>
-    <tbody data-bind="foreach: answers">
-        <tr>
-            <td data-bind="text: answerText"></td>
-            <td data-bind="starRating: points"></td>
-        </tr>    
-    </tbody>
-</table>
+<form data-bind="submit: addTask">
+    Add task: <input data-bind="value: newTaskText" placeholder="What needs to be done?" />
+    <button type="submit">Add</button>
+</form>
 
-<h3 data-bind="fadeVisible: pointsUsed() > pointsBudget">You've used too many points! Please remove some.</h3>
-<p>You've got <b data-bind="text: pointsBudget - pointsUsed()"></b> points left to use.</p>
-<button data-bind="jqButton: {enable: pointsUsed() <= pointsBudget}, click: save">Finished</button>
+<ul data-bind="foreach: tasks, visible: tasks().length > 0">
+    <li>
+        <input type="checkbox" data-bind="checked: isDone" />
+        <input data-bind="value: title, disable: isDone" />
+        <a href="#" data-bind="click: $parent.removeTask">Delete</a>
+    </li> 
+</ul>
+
+You have <b data-bind="text: incompleteTasks().length">&nbsp;</b> incomplete task(s)
+<span data-bind="visible: incompleteTasks().length == 0"> - it's beer time!</span>
 
 
 <script type="text/javascript" src="knockout-3.4.2.js"></script>
