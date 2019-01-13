@@ -5,12 +5,12 @@ function Task(data) {
 
 function TaskListViewModel() {
   // Data
-  var self = this;
+  let self = this;
   self.tasks = ko.observableArray([]);
   self.newTaskText = ko.observable();
   self.incompleteTasks = ko.computed(function() {
     return ko.utils.arrayFilter(self.tasks(), function(task) {
-      return !task.isDone();
+      return !task.isDone() && !task._destroy;
     });
   });
 
@@ -21,7 +21,7 @@ function TaskListViewModel() {
   };
 
   self.removeTask = function(task) {
-    self.tasks.remove(task);
+    self.tasks.destroy(task);
   };
 
   // get data from server
@@ -31,6 +31,19 @@ function TaskListViewModel() {
     });
     self.tasks(mappedTasks);
   });
+
+  self.save = function() {
+    $.ajax("/tasks", {
+      data: ko.toJSON({
+        tasks: self.tasks
+      }),
+      type: "post",
+      contentType: "application/json",
+      success: function(result) {
+        alert(result);
+      }
+    });
+  };
 }
 
 ko.applyBindings(new TaskListViewModel());

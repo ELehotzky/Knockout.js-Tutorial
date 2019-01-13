@@ -22,10 +22,7 @@
 You have <b data-bind="text: incompleteTasks().length">&nbsp;</b> incomplete task(s)
 <span data-bind="visible: incompleteTasks().length == 0"> - it's beer time!</span>
 
-<form action="/tasks/saveform" method="post">
-	<input type="hidden" name="tasks" data-bind="value: ko.toJSON(tasks)" />
-		<button type="submit">Save</button>
-</form>
+<button data-bind="click: save">Save</button>
 
 <script type="text/javascript" src="knockout-3.4.2.js"></script>
 <script src="index.js"></script>
