@@ -19,9 +19,20 @@ function TaskListViewModel() {
     self.tasks.push(new Task({ title: this.newTaskText() }));
     self.newTaskText("");
   };
+
   self.removeTask = function(task) {
     self.tasks.remove(task);
   };
+
+  // get data from server
+  $.getJSON("/tasks", function(allData) {
+    let mappedTasks = $.map(allData, function(item) {
+      return new Task(item);
+    });
+    self.tasks(mappedTasks);
+  });
 }
 
 ko.applyBindings(new TaskListViewModel());
+
+console.log("");
